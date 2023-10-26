@@ -87,7 +87,7 @@ constant kRAM_Width : integer := 8;
 type eeprom_t is array (0 to 2**kAddrBits - 1) of std_logic_vector(kRAM_Width-1 downto 0);
 
 impure function InitRamFromFile (ramfilename : in string) return eeprom_t is
-file ramfile : text is in ramfilename;
+file ramfile : text open read_mode is ramfilename;
 variable ramfileline : line;
 variable ram_name	: eeprom_t;
 variable bitvec : bit_vector(kRAM_Width-1 downto 0);
