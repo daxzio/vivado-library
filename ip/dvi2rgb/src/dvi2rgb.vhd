@@ -167,6 +167,10 @@ signal dbg_pEyeSize : eyeSize_t;
 
 signal pTrigOut, pTrigOutAck, rTrigOutAck, rTrigOut : std_logic;
 
+type a_OtherCh is array (2 downto 0) of std_logic_vector(1 downto 0);
+signal x_OtherChRdy : a_OtherCh;
+signal x_OtherChVld : a_OtherCh;
+
 begin
 
 ResetActiveLow: if not kRstActiveHigh generate
@@ -241,8 +245,10 @@ DataDecoders: for iCh in 2 downto 0 generate
          pRst                    => pRst_int,
          sDataIn_p               => TMDS_Data_p(iCh),                           
          sDataIn_n               => TMDS_Data_n(iCh),                                       
-         pOtherChRdy(1 downto 0) => pRdy((iCh+1) mod 3) & pRdy((iCh+2) mod 3), -- tie channels together for channel de-skew
-         pOtherChVld(1 downto 0) => pVld((iCh+1) mod 3) & pVld((iCh+2) mod 3), -- tie channels together for channel de-skew
+--          pOtherChRdy(1 downto 0) => pRdy((iCh+1) mod 3) & pRdy((iCh+2) mod 3), -- tie channels together for channel de-skew
+--          pOtherChVld(1 downto 0) => pVld((iCh+1) mod 3) & pVld((iCh+2) mod 3), -- tie channels together for channel de-skew
+         pOtherChRdy(1 downto 0) => x_OtherChRdy(iCh), -- tie channels together for channel de-skew
+         pOtherChVld(1 downto 0) => x_OtherChVld(iCh), -- tie channels together for channel de-skew
          
          pC0                     => pC0(iCh),
          pC1                     => pC1(iCh),                    
