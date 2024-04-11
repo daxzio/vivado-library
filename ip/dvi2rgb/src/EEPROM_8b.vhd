@@ -172,7 +172,7 @@ begin
          if (sState = stRegAddress) then
             sAddr <= to_integer(resize(unsigned(sI2C_DataIn), kAddrBits));
          elsif (sState = stRead) then
-            sAddr <= sAddr + 1;
+            sAddr <= (sAddr + 1) mod (2**kAddrBits);
          end if;
       end if;
    end if;
